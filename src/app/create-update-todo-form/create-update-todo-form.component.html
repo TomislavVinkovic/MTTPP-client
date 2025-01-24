@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Create a todo</h2>
+<mat-dialog-content>
+    <form #form="ngForm">
+        <div style="width: 100%;">   
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Title</mat-label>
+                <input
+                    #titleControl="ngModel"
+                    name="title"
+                    [ngModel]="title()"
+                    (ngModelChange)="title.set($event)"
+                    type="text" 
+                    matInput 
+                    placeholder="Ex. Wash the dishes"
+                    required
+                >
+            </mat-form-field>   
+        </div>
+        
+        <div style="width: 100%; margin-top: 20px;">
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Date</mat-label>
+                <input 
+                    #dateControl="ngModel"
+                    name="date"
+                    [ngModel]="date()"
+                    (ngModelChange)="date.set($event)"
+                    type="date" 
+                    matInput 
+                    required
+                >
+            </mat-form-field>
+        </div>
+        
+
+        <mat-checkbox
+            name="isCompleted"
+            [ngModel]="isCompleted()"
+            (ngModelChange)="isCompleted.set($event)"
+        >
+            Completed
+        </mat-checkbox>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onSave()">Save</button>
+</mat-dialog-actions>
