@@ -1,10 +1,10 @@
-import { inject, Signal } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { AuthService, User } from '../auth-service/auth.service';
-import { filter, map, take } from 'rxjs';
+import { inject } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { CanActivateFn, Router } from '@angular/router';
+import { filter, take, map } from 'rxjs';
+import { AuthService } from '../../auth-service/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const loginGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
 
@@ -12,14 +12,13 @@ export const authGuard: CanActivateFn = (route, state) => {
     filter(user => user !== undefined), // Wait until the user is either fetched or confirmed to be null
     take(1), // Take the first emitted non-undefined value
     map(user => {
-      if(!!user) {
+      if(!user) {
         return true;
       }
       else {
-        router.navigate(['/app/login']);
+        router.navigate(['/todos']);
         return false;
       }
     })
   );
 };
-

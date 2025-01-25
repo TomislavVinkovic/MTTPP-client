@@ -1,0 +1,23 @@
+mat-card {
+    width: 90%;
+    height: 90%;
+
+    .card-title-content {
+        display: inline;
+    }
+
+    h2 {
+        color: white;
+    }
+}
+
+.new {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 20px;
+
+    button {
+        margin-right: 10px !important;
+    }
+}

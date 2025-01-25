@@ -13,11 +13,11 @@ export class AuthService {
   public user = computed(() => this._loggedInUser());
 
   constructor() {
-    this.http.get<{ token: string }>('/is-authenticated').subscribe({
-      next: response => {
-        this.setAuthenticated(this.decodeUserFromJwt(response.token));
+    this.http.post<{ token: string }>('validate-token', {}).subscribe({
+      next: _ => {
+        this.setAuthenticated(this.decodeUserFromJwt(localStorage.getItem('token')!));
       },
-      error: () => {
+      error: (err) => {
         this.setAuthenticated(null);
       }
     });
@@ -40,11 +40,16 @@ export class AuthService {
   }
 
   register(credentials: { email: string, password: string }) {
-    return this.http.post('/register', credentials);
+    return this.http.post('register', credentials);
   }
 
   logout() {
-    return this.http.post('/logout', {});
+    return this.http.post('logout', {}).pipe(
+      tap(_ => {
+        localStorage.removeItem('token');
+        this.setAuthenticated(null);
+      })
+    );
   }
 
 }

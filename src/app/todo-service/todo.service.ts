@@ -9,15 +9,13 @@ import { environment } from '../../environments/environment';
 })
 export class TodoService {
 
-  BASE_ENDPOINT = environment.BASE_URL + '/todos';
-
   private http: HttpClient = inject(HttpClient);
 
   getTodos(pagination: {
     page: number,
     perPage: number
   }) {
-    return this.http.get(this.BASE_ENDPOINT + `?perpage=${pagination.perPage}&page=${pagination.page}`).pipe(
+    return this.http.get(`todos?perpage=${pagination.perPage}&page=${pagination.page}`).pipe(
       map((result: any) => {
         return {
           meta: result.meta,
@@ -28,7 +26,7 @@ export class TodoService {
   }
 
   createTodo(todo: Todo) {
-    return this.http.post(this.BASE_ENDPOINT, {todo}).pipe(
+    return this.http.post('todos', {todo}).pipe(
       map((result: any) => {
         return {
           todo: new Todo(result)
@@ -38,7 +36,7 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo) {
-    return this.http.put(this.BASE_ENDPOINT + `/${todo.id}`, {todo}).pipe(
+    return this.http.put(`todos/${todo.id}`, {todo}).pipe(
       map((result: any) => {
         return {
           todo: new Todo(result)
@@ -48,7 +46,7 @@ export class TodoService {
   }
 
   deleteTodo(todo: Todo) {
-    return this.http.delete(this.BASE_ENDPOINT + `/${todo.id}`).pipe(
+    return this.http.delete(`todos/${todo.id}`).pipe(
       map((result: any) => {
         return {
           todo: new Todo(result)

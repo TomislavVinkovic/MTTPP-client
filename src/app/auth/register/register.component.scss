@@ -1,0 +1,21 @@
+.register-card {
+
+    width: 400px;
+
+    margin: 200px auto;
+
+    padding: 20px;
+
+    form {
+        margin-top: 20px !important;
+
+        mat-form-field {
+            width: 100%;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+        }
+    }
+
+}

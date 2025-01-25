@@ -9,7 +9,8 @@ import { CreateUpdateTodoFormComponent } from './create-update-todo-form/create-
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { AppMaterialModule } from './app-material.module';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from './auth/auth-service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,123 +23,20 @@ import { RouterModule } from '@angular/router';
   ]
 })
 
-export class AppComponent implements OnInit, AfterViewInit {
-  titleService = inject(Title);
-  todoService = inject(TodoService);
-  dialog = inject(MatDialog);
-  snack = inject(MatSnackBar);
+export class AppComponent {
 
-  todos: WritableSignal<Todo[]> = signal([]);
-  metaPagination: WritableSignal<MetaPagination> = signal({
-    pageSize: 10
-  });
+  auth = inject(AuthService);
+  router = inject(Router);
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  
-  ngOnInit(): void {
-    this.titleService.setTitle('Todo App');
-    this.getTodos();
-    
-  }
-
-  ngAfterViewInit(): void {
-    this.paginator?.page.subscribe(() => {
-      window.scroll(0, 0);
-      this.getTodos();
-    });
-  }
-
-  getTodos() {
-    this.todoService.getTodos({
-      page: this.paginator ? this.paginator.pageIndex + 1 : 1,
-      perPage: this.paginator ? this.paginator.pageSize : this.metaPagination().pageSize!
-    }).subscribe({
-      next: (data) => {
-        this.todos.set(data.todos);
-        this.metaPagination.set(data.meta);
-        if(this.paginator) {
-          this.paginator.length = data.meta.total;
-        }
-        
+  logout() {
+    this.auth.logout().subscribe({
+      next: _ => {
+        this.router.navigate(['/login']);
       },
-      error: (error: any) => {
-        console.error(error);
+      error: (err) => {
+        console.error(err);
+        alert('An error occurred while logging out');
       }
     });
   }
-
-  toggleTodo(todo: Todo) {
-    // so as not to change the local data if the todo is not updated on the server
-    const todoCopy = new Todo(todo);
-    todoCopy.done = !todo.done;
-
-    this.todoService.updateTodo(todoCopy).subscribe({
-      next: (data) => {
-        const currentTodos = this.todos();
-        const todoToUpdateIndex = currentTodos.findIndex(todo => todo.id === data.todo.id);
-        if(todoToUpdateIndex > -1) {
-          currentTodos[todoToUpdateIndex] = data.todo;
-          this.todos.set(currentTodos);
-        }
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-    });
-  }
-
-  createTodo() {
-    this.dialog.open(CreateUpdateTodoFormComponent, {
-      width: '600px',
-      height: '450px',
-      autoFocus: true,
-      disableClose: true
-    }).afterClosed().subscribe((data) => {
-      if(data) {
-        this.snack.open(
-          'Todo created!', 'Ok', {duration: 3000, horizontalPosition: 'start', verticalPosition: 'bottom'}
-        );
-        this.getTodos();
-      }
-    })
-  }
-
-  updateTodo(todo: Todo) {
-    this.dialog.open(CreateUpdateTodoFormComponent, {
-      width: '600px',
-      height: '450px',
-      autoFocus: true,
-      disableClose: true,
-
-      data: {
-        todo
-      }
-    }).afterClosed().subscribe((data) => {
-      if(data) {
-        this.snack.open(
-          'Todo updated!', 
-          undefined, 
-          {duration: 3000, horizontalPosition: 'start', verticalPosition: 'bottom'}
-        );
-        this.getTodos();
-      }
-    })
-  }
-
-  deleteTodo(todo: Todo) {
-    this.todoService.deleteTodo(todo).subscribe({
-      next: (data) => {
-        this.snack.open(
-          'Todo deleted!', 
-          undefined, 
-          {duration: 3000, horizontalPosition: 'start', verticalPosition: 'bottom'}
-        );
-        this.getTodos();
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-    });
-  }
-
 }
