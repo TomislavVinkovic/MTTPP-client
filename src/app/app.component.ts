@@ -9,6 +9,7 @@ import { CreateUpdateTodoFormComponent } from './create-update-todo-form/create-
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { AppMaterialModule } from './app-material.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { AppMaterialModule } from './app-material.module';
   styleUrls: ['./app.component.scss'],
   imports: [
     CommonModule,
+    RouterModule,
     AppMaterialModule,
   ]
 })

@@ -1,5 +1,23 @@
 <mat-toolbar color="primary">
   <span>Todo app</span>
+  <span class="toolbar-spacer"></span>
+
+  <button 
+    mat-button class="example-icon favorite-icon" 
+    aria-label="Example icon-button with heart icon"
+  >
+    Log in
+  </button>
+
+  <button 
+    [routerLink]=""
+    mat-button 
+    class="example-icon favorite-icon" 
+    aria-label="Example icon-button with heart icon"
+  >
+    Register
+  </button>
+
 </mat-toolbar>
 
 <mat-grid-list cols="4" rowHeight="2:1" gutterSize="20px" style="margin-top: 20px;">
