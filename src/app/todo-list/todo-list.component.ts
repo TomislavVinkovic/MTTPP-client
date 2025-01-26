@@ -37,7 +37,6 @@ export class TodoListComponent {
   ngOnInit(): void {
     this.titleService.setTitle('Todo App');
     this.getTodos();
-    
   }
 
   ngAfterViewInit(): void {
@@ -58,7 +57,6 @@ export class TodoListComponent {
         if(this.paginator) {
           this.paginator.length = data.meta.total;
         }
-        
       },
       error: (error: any) => {
         console.error(error);
