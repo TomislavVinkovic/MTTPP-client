@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
 import { provideHttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter, Router } from '@angular/router';
 import { routes } from '../../app.routes';
