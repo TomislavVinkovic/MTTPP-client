@@ -79,4 +79,21 @@ describe('RegisterComponent', () => {
     expect(errorMessage).toBeTruthy();
     expect(errorMessage.textContent).toContain('Password is required');
   });
+
+  it('should display a correct error message if the confirm password is required', () => {
+    const passwordControl = component.registerForm.controls['confirmPassword'];
+    passwordControl.setValue('');
+    passwordControl.markAsTouched();
+    passwordControl.updateValueAndValidity();
+    fixture.detectChanges();
+
+    const passwordInput = fixture.nativeElement.querySelector('input[name="confirm-password"]');
+    passwordInput.focus();
+    passwordInput.blur();
+    fixture.detectChanges();
+
+    const errorMessage = fixture.nativeElement.querySelector('#confirm-password-required-error');
+    expect(errorMessage).toBeTruthy();
+    expect(errorMessage.textContent).toContain('Password confirmation is required');
+  });
 });

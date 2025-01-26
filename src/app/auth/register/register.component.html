@@ -26,10 +26,10 @@
             <mat-form-field appearance="fill">
                 <mat-label>Confirm password</mat-label>
                 <input name="confirm-password" matInput formControlName="confirmPassword" type="password" required>
-                <mat-error *ngIf="registerForm.get('confirmPassword')!.hasError('required')">
+                <mat-error id="confirm-password-required-error" *ngIf="registerForm.get('confirmPassword')!.hasError('required')">
                     Password confirmation is required
                 </mat-error>
-                <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+                <mat-error id="password-mismatch-error" *ngIf="registerForm.hasError('passwordMismatch')">
                     Passwords do not match
                 </mat-error>
             </mat-form-field>

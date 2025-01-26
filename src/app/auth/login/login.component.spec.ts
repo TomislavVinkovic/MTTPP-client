@@ -80,6 +80,7 @@ describe('LoginComponent', () => {
     passwordInput.blur();
     fixture.detectChanges();
 
+    
     const errorMessage = fixture.nativeElement.querySelector('#password-required-error');
     expect(errorMessage).toBeTruthy();
     expect(errorMessage.textContent).toContain('Password is required');
