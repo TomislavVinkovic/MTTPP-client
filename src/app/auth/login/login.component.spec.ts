@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { AuthService } from '../auth-service/auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
 import { routes } from '../../app.routes';
@@ -19,6 +19,7 @@ describe('LoginComponent', () => {
       imports: [LoginComponent],
       providers: [
         provideHttpClient(),
+        provideHttpClientTesting(),
         provideRouter(routes),
         provideAnimationsAsync(),
       ]
