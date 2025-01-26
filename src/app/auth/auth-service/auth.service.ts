@@ -16,7 +16,7 @@ export class AuthService {
     this.validateToken();
   }
 
-  private setAuthenticated(user: User|null|undefined) {
+  setAuthenticated(user: User|null|undefined) {
     this._loggedInUser.set(user);
   }
   private validateToken() {
