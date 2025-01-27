@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Todo } from '../models/todo';
 import { TodoService } from '../todo-service/todo.service';
@@ -26,6 +26,9 @@ export class CreateUpdateTodoFormComponent {
   title = signal(this.data && this.data.todo ? this.data.todo.title : '');
   date = signal(this.data && this.data.todo ? this.data.todo.date : '');
   isCompleted = signal(this.data && this.data.todo ? this.data.todo.done : false);
+
+  titleControl = viewChild('title');
+  dateControl = viewChild('date');
 
   onCancel(){
     this.dialogRef.close();

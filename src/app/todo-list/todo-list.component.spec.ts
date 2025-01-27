@@ -3,7 +3,6 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { TodoListComponent } from './todo-list.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { AuthService } from '../auth/auth-service/auth.service';
 import { TodoService } from '../todo-service/todo.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -52,8 +51,22 @@ describe('TodoListComponent', () => {
     expect(component.todos().length).toBe(mockTodos.length);
   }));
 
-  /*
-  TODO: When deleteTodo is called with a specific todo, and that todo is returned from the todo service, 
-  the todo should be removed from the todos writable signal.
-  */
+  
+
+  it('should display the correct number of todos', fakeAsync(() => {
+    const mockTodos: Todo[] = [
+      { id: '1', title: 'Todo 1', userId: 'user1', done: false },
+      { id: '2', title: 'Todo 2', userId: 'user2', done: true },
+      { id: '3', title: 'Todo 3', userId: 'user3', done: false }
+    ];
+
+    spyOn(todoService, 'getTodos').and.returnValue(of({ todos: mockTodos, meta: { total: 3, pageSize: 10 } }));
+
+    component.getTodos();
+    fixture.detectChanges();
+    tick();
+
+    const displayedTodos = fixture.nativeElement.querySelectorAll('.todo-card');
+    expect(displayedTodos.length).toBe(mockTodos.length);
+  }));
 });

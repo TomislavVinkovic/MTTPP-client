@@ -124,7 +124,7 @@ export class TodoListComponent {
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo).subscribe({
-      next: (data) => {
+      next: (_) => {
         this.snack.open(
           'Todo deleted!', 
           undefined, 
