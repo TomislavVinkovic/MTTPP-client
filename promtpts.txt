@@ -1,6 +1,0 @@
-1. App routes
-For my main screen components, I have 3 components: login, 
-where a user logs into the application, register, where the user can 
-egister for an account and app component, where the user can add todos. 
-I want to protect that component using an auth guard (I am using JWT tokens for auth 
-but I have not implemented them yet), and i want the user to only be able
