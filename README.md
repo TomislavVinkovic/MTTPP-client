@@ -28,9 +28,8 @@ ng test
 
 ## Metode testiranja
 
-Ovaj projekt koristi nekoliko metoda testiranja kako bi osigurao kvalitetu i pouzdanost koda:
-
 - **Jedinični testovi**: Koristimo [Karma](https://karma-runner.github.io) i [Jasmine](https://jasmine.github.io) za jedinično testiranje. Ovi testovi pokrivaju pojedinačne komponente i servise kako bi se provjerila njihova funkcionalnost u izolaciji.
+Jedinični testovi za pojedine komponente i servise napisani su u .spec.ts datotekama.
 
 ## Kontinuirana integracija
 
